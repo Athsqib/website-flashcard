@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Sanctuary - Study Session</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Study Session Specific Styles */
+        .study-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Sticky Header with Dashboard button */
+        .study-header {
+            position: sticky;
+            top: 0;
+            background: #f0f2f5;
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            z-index: 100;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            background: #1e1e2f;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #2d2d44;
+        }
+
+        .set-title {
+            font-size: 1.5rem;
+            color: #1e1e2f;
+        }
+
+        .set-title span {
+            font-size: 0.9rem;
+            color: #667eea;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .progress-label {
+            font-size: 0.9rem;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-numbers {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e1e2f;
+            margin-bottom: 1rem;
+        }
+
+        .progress-numbers span {
+            font-size: 1rem;
+            color: #999;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        /* Flashcard */
+        .flashcard {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .flashcard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card-label.flipped {
+            color: #667eea;
+        }
+
+        .card-content {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: #1e1e2f;
+        }
+
+        .card-question {
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .card-answer {
+            display: none;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+            color: #667eea;
+            font-weight: normal;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .flashcard.show-answer .card-question {
+            font-weight: normal;
+            color: #666;
+        }
+
+        .flashcard.show-answer .card-answer {
+            display: block;
+        }
+
+        .flashcard.show-answer .card-label {
+            color: #667eea;
+        }
+
+        .flashcard.show-question .card-answer {
+            display: none;
+        }
+
+        .flip-hint {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Action Buttons */
+        .action-section {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border: 2px solid #1e1e2f;
+            background: white;
+            color: #1e1e2f;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #1e1e2f;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .flip-btn {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        .flip-btn:hover {
+            background: #5a67d8;
+        }
+
+        /* Completion Screen */
+        .completion-screen {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .completion-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .completion-screen p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .restart-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .restart-btn:hover {
+            background: #5a67d8;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .keyboard-hint span {
+            display: inline-block;
+            background: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin: 0 4px;
+            font-family: monospace;
+        }
+
+        /* Flip animation */
+        .flip-animation {
+            animation: cardFlip 0.4s ease;
+        }
+
+        @keyframes cardFlip {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .study-container {
+                padding: 1rem;
+            }
+
+            .flashcard {
+                padding: 2rem 1rem;
+                min-height: 300px;
+            }
+
+            .card-content {
+                font-size: 1.1rem;
+            }
+
+            .study-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="study-container" id="studyContainer">
+    <!-- Sticky Header with Dashboard button -->
+    <div class="study-header">
+        <a href="index.html" class="back-btn">← Dashboard</a>
+        <div class="set-title" id="setTitle">Loading...</div>
+    </div>
+
+    <!-- Main Study Area -->
+    <div id="studyArea">
+        <div class="progress-section">
+            <div class="progress-label">PROGRESS</div>
+            <div class="progress-numbers">
+                <span id="currentCardNum">0</span> / <span id="totalCards">0</span> Cards
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Flashcard -->
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+            <div class="card-label" id="cardLabel">TERM</div>
+            <div class="card-content">
+                <div class="card-question" id="questionText">Click to reveal answer</div>
+                <div class="card-answer" id="answerText"></div>
+            </div>
+            <div class="flip-hint" id="flipHint">👇 Click card or press SPACE to flip 👇</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-section">
+            <button class="action-btn" onclick="previousCard()">◀ PREV</button>
+            <button class="action-btn flip-btn" id="flipButton" onclick="flipCard()">🔄 FLIP CARD</button>
+            <button class="action-btn" onclick="nextCard()">NEXT ▶</button>
+        </div>
+
+        <!-- Keyboard hint -->
+        <div class="keyboard-hint">
+            💡 <span>←</span> Previous &nbsp;&nbsp; <span>→</span> Next &nbsp;&nbsp; <span>SPACE</span> Flip Card &nbsp;&nbsp; <span>F</span> Flip Back
+        </div>
+    </div>
+
+    <!-- Completion Screen (hidden initially) -->
+    <div id="completionScreen" class="completion-screen hidden">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You've completed all flashcards in this set!</p>
+        <p id="completionStats"></p>
+        <button class="restart-btn" onclick="restartSession()">🔄 Study Again</button>
+        <a href="index.html" class="back-btn" style="display: inline-block; background: #667eea;">← Back to Dashboard</a>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/study.js"></script>
+</body>
+</html>

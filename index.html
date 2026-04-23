@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Sanctuary - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Hamburger Button -->
+<div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">✕</div>
+        <h2>📖 Flashcard Sanctuary</h2>
+        <nav>
+            <p><strong>Dashboard</strong></p>
+            <ul>
+                <li>📊 Study Focus</li>
+                <li>⚡ DEEP WORK MODE</li>
+                <li>📚 My Library</li>
+                <li><a href="studio.html" class="sidebar-link">🎴 Flashcard Studio</a></li>
+                <li>📈 Analytics</li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="welcome-card">
+            <h1>Welcome Back, Alex 👋</h1>
+            <p>You've mastered 12 cards today. Keep the momentum going.</p>
+            <div class="daily-goal">
+                <span>📅 DAILY GOAL</span>
+                <progress value="12" max="20"></progress>
+                <span>12/20 cards</span>
+            </div>
+        </div>
+
+        <div class="master-card">
+            <h2>🇪🇸 Master Spanish Vocabulary</h2>
+            <p>You're 85% of the way to your weekly goal. Just 15 more cards to reach your streak!</p>
+            <button class="continue-btn">Continue Set →</button>
+        </div>
+
+        <h2>Your Flashcard Sets</h2>
+        <p>Continue where you left off or start something new.</p>
+
+        <div class="sets-container" id="setsContainer"></div>
+    </div>
+</div>
+
+<!-- Split JavaScript files -->
+<script src="js/common.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
