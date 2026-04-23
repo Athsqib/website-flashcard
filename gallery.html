@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Sanctuary - My Library</title>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        /* Gallery specific styles */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .gallery-header {
+            position: sticky;
+            top: 0;
+            background: #f0f2f5;
+            padding: 1rem 0;
+            text-align: center;
+            z-index: 100;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-header h1 {
+            font-size: 2rem;
+            color: #1e1e2f;
+        }
+
+        .gallery-header p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .stats-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .search-bar {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 40px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .gallery-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-card h3 {
+            font-size: 1.3rem;
+            color: #1e1e2f;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-count-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .gallery-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-study-btn {
+            flex: 1;
+            background: #1e1e2f;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .gallery-study-btn:hover {
+            background: #33334f;
+        }
+
+        .gallery-delete-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .gallery-delete-btn:hover {
+            background: #cc0000;
+        }
+
+        .empty-gallery {
+            text-align: center;
+            padding: 4rem;
+            color: #999;
+        }
+
+        .empty-gallery h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .create-first-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .create-first-btn:hover {
+            background: #5a67d8;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                padding: 1rem;
+                margin-top: 60px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hamburger Button -->
+<div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Dashboard Container (wraps sidebar + content) -->
+<div class="dashboard-container">
+    <!-- Sidebar will be loaded here by JavaScript -->
+
+    <!-- Main Content -->
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1> My Library</h1>
+            <p>Browse and manage all your flashcard sets</p>
+        </div>
+
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSets">0</div>
+                <div class="stat-label">Total Sets</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCards">0</div>
+                <div class="stat-label">Total Cards</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lastStudied">-</div>
+                <div class="stat-label">Last Studied</div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder=" Search flashcard sets...">
+        </div>
+
+        <div id="galleryGrid" class="gallery-grid"></div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/gallery.js"></script>
+</body>
+</html>

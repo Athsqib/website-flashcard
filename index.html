@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcard Sanctuary - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
@@ -15,39 +16,42 @@
     <span></span>
 </div>
 
+<!-- Dashboard Container (wraps sidebar + content) -->
 <div class="dashboard-container">
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="close-btn" id="closeBtn">✕</div>
-        <h2>📖 Flashcard Sanctuary</h2>
-        <nav>
-            <p><strong>Dashboard</strong></p>
-            <ul>
-                <li>📊 Study Focus</li>
-                <li>⚡ DEEP WORK MODE</li>
-                <li>📚 My Library</li>
-                <li><a href="studio.html" class="sidebar-link">🎴 Flashcard Studio</a></li>
-                <li>📈 Analytics</li>
-            </ul>
-        </nav>
-    </div>
+    <!-- Sidebar will be loaded here by JavaScript -->
 
     <!-- Main Content -->
     <div class="main-content">
         <div class="welcome-card">
-            <h1>Welcome Back, Alex 👋</h1>
+            <h1>Welcome Back, Alex </h1>
             <p>You've mastered 12 cards today. Keep the momentum going.</p>
             <div class="daily-goal">
-                <span>📅 DAILY GOAL</span>
-                <progress value="12" max="20"></progress>
-                <span>12/20 cards</span>
+                <span> DAILY GOAL</span>
+                <progress id="dailyProgress" value="12" max="20"></progress>
+                <span id="dailyProgressText">12/20 cards</span>
             </div>
         </div>
 
-        <div class="master-card">
-            <h2>🇪🇸 Master Spanish Vocabulary</h2>
-            <p>You're 85% of the way to your weekly goal. Just 15 more cards to reach your streak!</p>
-            <button class="continue-btn">Continue Set →</button>
+        <!-- Goal Flashcard Section -->
+        <div class="goal-flashcard-section">
+            <div class="goal-header">
+                <h2> Goal: Loading...</h2>
+                <p>Master cards from your selected set to reach your daily goal!</p>
+            </div>
+
+            <div class="goal-flashcard" id="goalFlashcard" onclick="flipGoalCard()">
+                <div class="goal-card-label" id="goalCardLabel"> Loading...</div>
+                <div class="goal-card-content">
+                    <div class="goal-question" id="goalQuestion">Loading...</div>
+                    <div class="goal-answer" id="goalAnswer"></div>
+                </div>
+                <div class="goal-flip-hint" id="goalFlipHint"> Click to reveal answer </div>
+            </div>
+
+            <div class="goal-actions">
+                <button class="goal-mastered-btn" onclick="markGoalMastered()"> Mastered - +1 Point</button>
+                <button class="goal-skip-btn" onclick="skipGoalCard()">️ Skip - Next Card</button>
+            </div>
         </div>
 
         <h2>Your Flashcard Sets</h2>
@@ -57,7 +61,6 @@
     </div>
 </div>
 
-<!-- Split JavaScript files -->
 <script src="js/common.js"></script>
 <script src="js/dashboard.js"></script>
 </body>

@@ -6,7 +6,10 @@ let isFlipped = false;
 // ========== STUDY SESSION FUNCTIONS ==========
 
 // Initialize study session
-function initStudySession() {
+async function initStudySession() {
+    // Load sidebar FIRST
+    await initPageWithSidebar();
+
     // Get the selected set from sessionStorage
     const setData = sessionStorage.getItem('currentStudySet');
 
@@ -25,15 +28,17 @@ function initStudySession() {
 
     if (!currentSet) {
         // Redirect back if no set found
-        alert('No flashcard set selected!');
-        window.location.href = 'index.html';
+        showAlertDialog('No flashcard set selected!', '');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
         return;
     }
 
     // Display set title
     const setTitleEl = document.getElementById('setTitle');
     if (setTitleEl) {
-        setTitleEl.innerHTML = `📚 ${escapeHtml(currentSet.name)} <span>• ${currentSet.cards.length} cards</span>`;
+        setTitleEl.innerHTML = ` ${escapeHtml(currentSet.name)} <span>• ${currentSet.cards.length} cards</span>`;
     }
 
     // Update total cards display
@@ -100,7 +105,7 @@ function loadCard() {
         cardLabel.classList.remove('flipped');
     }
     if (flipHint) {
-        flipHint.innerHTML = '👇 Click card or press SPACE to flip 👇';
+        flipHint.innerHTML = ' Click card or press SPACE to flip ';
     }
 
     // Update progress display
@@ -133,7 +138,7 @@ function flipCard() {
             cardLabel.classList.add('flipped');
         }
         if (flipHint) {
-            flipHint.innerHTML = '🔄 Press SPACE or F to flip back 🔄';
+            flipHint.innerHTML = ' Press SPACE or F to flip back ';
         }
         isFlipped = true;
     }
@@ -163,7 +168,7 @@ function flipBack() {
             cardLabel.classList.remove('flipped');
         }
         if (flipHint) {
-            flipHint.innerHTML = '👇 Click card or press SPACE to flip 👇';
+            flipHint.innerHTML = ' Click card or press SPACE to flip ';
         }
         isFlipped = false;
     }
@@ -177,7 +182,7 @@ function nextCard() {
     if (currentCardIndex < currentSet.cards.length - 1) {
         currentCardIndex++;
         loadCard();
-        showToast(`➡️ Card ${currentCardIndex + 1} of ${currentSet.cards.length}`, '#667eea');
+        showToast(`️ Card ${currentCardIndex + 1} of ${currentSet.cards.length}`, '#667eea');
     } else {
         // Completed all cards!
         completeSession();
@@ -191,9 +196,9 @@ function previousCard() {
     if (currentCardIndex > 0) {
         currentCardIndex--;
         loadCard();
-        showToast(`⬅️ Card ${currentCardIndex + 1} of ${currentSet.cards.length}`, '#667eea');
+        showToast(`️ Card ${currentCardIndex + 1} of ${currentSet.cards.length}`, '#667eea');
     } else {
-        showToast('📌 You\'re at the first card!', '#ffa500');
+        showToast(' You\'re at the first card!', '#ffa500');
     }
 }
 
@@ -221,42 +226,20 @@ function completeSession() {
     if (studyArea) studyArea.classList.add('hidden');
     if (completionScreen) completionScreen.classList.remove('hidden');
 
-    // Calculate stats
     const totalCards = currentSet.cards.length;
     const completionStats = document.getElementById('completionStats');
 
     if (completionStats) {
         completionStats.innerHTML = `
-            🎯 Total Cards Reviewed: ${totalCards}<br>
-            ⭐ Great job! Keep up the momentum!
+             Total Cards Reviewed: ${totalCards}<br>
+             Great job! Keep up the momentum!
         `;
     }
 
-    // Clear session data
     sessionStorage.removeItem('currentStudySet');
-
-    // Remove keyboard listeners
     document.removeEventListener('keydown', handleKeyPress);
-}
 
-// Restart study session
-function restartSession() {
-    // Reset session
-    currentCardIndex = 0;
-    isFlipped = false;
-
-    // Hide completion screen, show study area
-    const studyArea = document.getElementById('studyArea');
-    const completionScreen = document.getElementById('completionScreen');
-
-    if (studyArea) studyArea.classList.remove('hidden');
-    if (completionScreen) completionScreen.classList.add('hidden');
-
-    // Reload first card
-    loadCard();
-
-    // Re-add keyboard listeners
-    document.addEventListener('keydown', handleKeyPress);
+    showAlertDialog(` Congratulations!\n\nYou completed all ${totalCards} flashcards!\n\nGreat job!`, '');
 }
 
 // Save current progress
@@ -270,9 +253,36 @@ function saveProgress() {
     localStorage.setItem('lastStudyProgress', JSON.stringify(progress));
 }
 
+// Restart study session (WITH CONFIRMATION)
+window.restartSession = function() {
+    showConfirmDialog(
+        'Restart this study session?\n\nYour progress will be reset to the beginning.',
+        () => {
+            currentCardIndex = 0;
+            isFlipped = false;
+
+            const studyArea = document.getElementById('studyArea');
+            const completionScreen = document.getElementById('completionScreen');
+
+            if (studyArea) studyArea.classList.remove('hidden');
+            if (completionScreen) completionScreen.classList.add('hidden');
+
+            loadCard();
+            document.addEventListener('keydown', handleKeyPress);
+            showToast(' Session restarted!', '#667eea');
+        }
+    );
+};
+
+// Make functions global for onclick handlers
+window.flipCard = flipCard;
+window.previousCard = previousCard;
+window.nextCard = nextCard;
+window.flipBack = flipBack;
+
 // Initialize study page
 if (document.getElementById('studyContainer')) {
     document.addEventListener('DOMContentLoaded', initStudySession);
 }
 
-console.log('✅ study.js loaded');
+console.log(' study.js loaded with sidebar loader');

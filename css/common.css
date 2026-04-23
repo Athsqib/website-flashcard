@@ -1,0 +1,240 @@
+/* ========== COMMON STYLES (shared across all pages) ========== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    overflow-x: hidden;
+}
+
+/* ========== DASHBOARD CONTAINER (flex layout) ========== */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* ========== SIDEBAR STYLES ========== */
+
+/* Sidebar - Desktop visible */
+.sidebar {
+    width: 260px;
+    background: #1e1e2f;
+    color: white;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    flex-shrink: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Sidebar links */
+.sidebar-link {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 0.75rem 0;
+}
+
+.sidebar-link:hover {
+    color: #a0a0c0;
+}
+
+/* Main menu / Home button highlight */
+.sidebar .main-menu {
+    background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+    border-radius: 12px;
+    margin: 0.5rem 0;
+    padding-left: 0.5rem;
+}
+
+.sidebar .main-menu:hover {
+    background: linear-gradient(135deg, #667eea40 0%, #764ba240 100%);
+}
+
+.sidebar .main-menu a {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Sidebar navigation */
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.sidebar nav p {
+    color: #a0a0c0;
+    margin-top: 1rem;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin-top: 0.5rem;
+}
+
+.sidebar li {
+    padding: 0.75rem 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+    list-style: none;
+}
+
+.sidebar li:hover {
+    background: #2d2d44;
+    padding-left: 0.5rem;
+}
+
+/* Icon spacing */
+.sidebar li i {
+    margin-right: 8px;
+}
+
+/* Close button - hidden on desktop */
+.close-btn {
+    display: none;
+}
+
+/* ========== HAMBURGER MENU (mobile) ========== */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1001;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #1e1e2f;
+    border-radius: 2px;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+    flex: 1;
+    max-width: 900px;
+    padding: 2rem;
+}
+
+/* ========== BACK BUTTON (shared) ========== */
+.back-btn {
+    background: #1e1e2f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+}
+
+.back-btn:hover {
+    background: #2d2d44;
+}
+
+/* ========== BUTTON CURSOR STYLES ========== */
+button,
+.study-btn,
+.continue-btn,
+.add-card-btn,
+.save-set-btn,
+.delete-card,
+.delete-set,
+.close-btn,
+.hamburger {
+    cursor: pointer;
+}
+
+.hamburger:hover {
+    cursor: pointer;
+}
+
+.sidebar li:hover,
+.sidebar-link:hover {
+    cursor: pointer;
+}
+
+/* ========== MOBILE RESPONSIVE (≤768px) ========== */
+@media (max-width: 768px) {
+    /* Show hamburger button */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Sidebar becomes hidden overlay on mobile */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100%;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        padding-top: 60px;
+        background: #1e1e2f;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Show close button on mobile */
+    .close-btn {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        color: white;
+        background: none;
+        border: none;
+    }
+
+    .close-btn:hover {
+        color: #ff6b6b;
+    }
+
+    /* Main content adjustments for mobile */
+    .dashboard-container {
+        display: block;
+    }
+
+    .main-content {
+        padding: 1rem;
+        margin-top: 60px;
+        max-width: 100%;
+    }
+}
+
+/* ========== EXTRA SMALL DEVICES (≤480px) ========== */
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0.8rem;
+    }
+
+    .sidebar {
+        width: 260px;
+    }
+}

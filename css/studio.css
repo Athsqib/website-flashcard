@@ -1,0 +1,254 @@
+/* ========== STUDIO-SPECIFIC STYLES ========== */
+
+/* Studio container - centered */
+.studio-container {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+}
+
+/* Sticky Page Header */
+.page-header {
+    position: sticky;
+    top: 0;
+    background: #f0f2f5;
+    padding: 1rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 100;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+/* Create Set Card */
+.create-set-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.create-set-card h2 {
+    color: #1e1e2f;
+    margin-bottom: 1rem;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #1e1e2f;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Buttons */
+.add-card-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.add-card-btn:hover {
+    background: #5a67d8;
+}
+
+.save-set-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    width: 100%;
+    transition: background 0.2s;
+}
+
+.save-set-btn:hover {
+    background: #45a049;
+}
+
+/* Cards Preview */
+.cards-preview {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-top: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.card-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    border-left: 4px solid #667eea;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.card-item:hover {
+    transform: translateX(4px);
+}
+
+.card-item strong {
+    display: block;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.card-item p {
+    margin-top: 5px;
+    color: #333;
+}
+
+.delete-card {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.delete-card:hover {
+    background: #cc0000;
+}
+
+/* Saved Sets List */
+.sets-list {
+    margin-top: 2rem;
+}
+
+.set-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    transition: transform 0.2s;
+}
+
+.set-item:hover {
+    transform: translateX(4px);
+}
+
+.set-info {
+    flex: 1;
+}
+
+.set-info strong {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.set-info p {
+    color: #666;
+    font-size: 14px;
+}
+
+.delete-set {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.delete-set:hover {
+    background: #cc0000;
+}
+
+.card-count {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.empty-message {
+    color: #999;
+    text-align: center;
+    padding: 2rem;
+}
+
+hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 2px solid #e0e0e0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .studio-container {
+        padding: 1rem;
+        margin-top: 60px;
+        width: 100%;
+    }
+
+    .set-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .delete-set {
+        width: 100%;
+    }
+}

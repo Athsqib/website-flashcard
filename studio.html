@@ -4,331 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcard Sanctuary - Studio</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Studio-specific styles */
-        .studio-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .page-header {
-            position: sticky;
-            top: 0;
-            background: #f0f2f5;
-            padding: 1rem 0;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            border-bottom: 1px solid #e0e0e0;
-            z-index: 100;
-        }
-
-        .back-btn {
-            background: #1e1e2f;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .back-btn:hover {
-            background: #2d2d44;
-        }
-
-        .create-set-card {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #1e1e2f;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .add-card-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-right: 10px;
-            margin-top: 10px;
-        }
-
-        .add-card-btn:hover {
-            background: #5a67d8;
-        }
-
-        .save-set-btn {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .save-set-btn:hover {
-            background: #45a049;
-        }
-
-        .cards-preview {
-            background: #f8f9fa;
-            border-radius: 16px;
-            padding: 1rem;
-            margin-top: 1rem;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .card-item {
-            background: white;
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
-            border-left: 4px solid #667eea;
-            position: relative;
-        }
-
-        .card-item strong {
-            display: block;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .card-item p {
-            margin-top: 5px;
-            color: #333;
-        }
-
-        .delete-card {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff4444;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .delete-card:hover {
-            background: #cc0000;
-        }
-
-        .sets-list {
-            margin-top: 2rem;
-        }
-
-        .set-item {
-            background: white;
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .set-info {
-            flex: 1;
-        }
-
-        .set-info strong {
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .set-info p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .delete-set {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .delete-set:hover {
-            background: #cc0000;
-        }
-
-        h2 {
-            color: #1e1e2f;
-            margin-bottom: 1rem;
-        }
-
-        hr {
-            margin: 2rem 0;
-            border: none;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .empty-message {
-            color: #999;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .card-count {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-left: 10px;
-        }
-
-        /* Mobile sidebar styles for studio */
-        .hamburger {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 35px;
-            height: 30px;
-            cursor: pointer;
-            z-index: 1001;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 100%;
-            height: 4px;
-            background-color: #1e1e2f;
-            border-radius: 2px;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: #1e1e2f;
-            color: white;
-            padding: 2rem 1rem;
-            transition: left 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: white;
-        }
-
-        .close-btn:hover {
-            color: #ff6b6b;
-        }
-
-        .sidebar h2 {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            margin-top: 30px;
-        }
-
-        .sidebar nav p {
-            color: #a0a0c0;
-            margin-top: 1rem;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            margin-top: 0.5rem;
-        }
-
-        .sidebar li {
-            padding: 0.75rem 0;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-
-        .sidebar li:hover {
-            background: #2d2d44;
-            padding-left: 0.5rem;
-        }
-
-        .sidebar-link {
-            color: white;
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .studio-container {
-                margin-top: 60px;
-            }
-
-            .page-header {
-                position: sticky;
-                top: 0;
-                background: #f0f2f5;
-                z-index: 99;
-                padding: 0.5rem 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/studio.css">
 </head>
 <body>
 
@@ -339,59 +16,43 @@
     <span></span>
 </div>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <div class="close-btn" id="closeBtn">✕</div>
-    <h2>📖 Flashcard Sanctuary</h2>
-    <nav>
-        <p><strong>Dashboard</strong></p>
-        <ul>
-            <li>📊 Study Focus</li>
-            <li>⚡ DEEP WORK MODE</li>
-            <li>📚 My Library</li>
-            <li><a href="studio.html" class="sidebar-link">🎴 Flashcard Studio</a></li>
-            <li>📈 Analytics</li>
-        </ul>
-    </nav>
-</div>
+<!-- Dashboard Container (wraps sidebar + content) -->
+<div class="dashboard-container">
+    <!-- Sidebar will be loaded here by JavaScript -->
 
-<!-- Main Content -->
-<div class="studio-container">
-    <div class="page-header">
-        <a href="index.html" class="back-btn">← Back to Dashboard</a>
-        <h1>🎴 Flashcard Studio</h1>
-    </div>
-
-    <!-- Create New Set -->
-    <div class="create-set-card">
-        <h2>Create New Flashcard Set</h2>
-
-        <div class="form-group">
-            <label>📝 Set Name:</label>
-            <input type="text" id="setName" placeholder="e.g., Spanish Verbs, React Hooks, World Capitals" autocomplete="off">
+    <!-- Main Content -->
+    <div class="studio-container">
+        <div class="page-header">
+            <h1> Flashcard Studio</h1>
         </div>
 
-        <div class="form-group">
-            <label>➕ Add Flashcard:</label>
-            <input type="text" id="question" placeholder="Question / Front of card" autocomplete="off">
-            <textarea id="answer" placeholder="Answer / Back of card"></textarea>
-            <button class="add-card-btn" onclick="addCardToPreview()">+ Add Card</button>
+        <!-- Create New Set -->
+        <div class="create-set-card">
+            <h2>Create New Flashcard Set</h2>
+
+            <div class="form-group">
+                <label> Set Name:</label>
+                <input type="text" id="setName" placeholder="e.g., Spanish Verbs, React Hooks, World Capitals" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label> Add Flashcard:</label>
+                <input type="text" id="question" placeholder="Question / Front of card" autocomplete="off">
+                <textarea id="answer" placeholder="Answer / Back of card"></textarea>
+                <button class="add-card-btn" onclick="addCardToPreview()">+ Add Card</button>
+            </div>
+
+            <div id="previewCards" class="cards-preview">
+                <div class="empty-message"> No cards added yet. Add some flashcards above!</div>
+            </div>
+
+            <button class="save-set-btn" onclick="saveFlashcardSet()"> Save Flashcard Set</button>
         </div>
 
-        <!-- Preview cards before saving -->
-        <div id="previewCards" class="cards-preview">
-            <div class="empty-message">✨ No cards added yet. Add some flashcards above!</div>
-        </div>
+        <hr>
 
-        <button class="save-set-btn" onclick="saveFlashcardSet()">💾 Save Flashcard Set</button>
-    </div>
-
-    <hr>
-
-    <!-- Your Saved Sets -->
-    <h2>📚 Your Saved Flashcard Sets</h2>
-    <div id="savedSetsList" class="sets-list">
-        <!-- Saved sets will appear here -->
+        <h2> Your Saved Flashcard Sets</h2>
+        <div id="savedSetsList" class="sets-list"></div>
     </div>
 </div>
 
