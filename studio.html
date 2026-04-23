@@ -14,11 +14,17 @@
         }
 
         .page-header {
+            position: sticky;
+            top: 0;
+            background: #f0f2f5;
+            padding: 1rem 0;
             display: flex;
             align-items: center;
             gap: 20px;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            border-bottom: 1px solid #e0e0e0;
+            z-index: 100;
         }
 
         .back-btn {
@@ -217,10 +223,139 @@
             font-size: 12px;
             margin-left: 10px;
         }
+
+        /* Mobile sidebar styles for studio */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 35px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 4px;
+            background-color: #1e1e2f;
+            border-radius: 2px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: #1e1e2f;
+            color: white;
+            padding: 2rem 1rem;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+        }
+
+        .close-btn:hover {
+            color: #ff6b6b;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            margin-top: 30px;
+        }
+
+        .sidebar nav p {
+            color: #a0a0c0;
+            margin-top: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .sidebar li {
+            padding: 0.75rem 0;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .sidebar li:hover {
+            background: #2d2d44;
+            padding-left: 0.5rem;
+        }
+
+        .sidebar-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .studio-container {
+                margin-top: 60px;
+            }
+
+            .page-header {
+                position: sticky;
+                top: 0;
+                background: #f0f2f5;
+                z-index: 99;
+                padding: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body>
 
+<!-- Hamburger Button -->
+<div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="close-btn" id="closeBtn">✕</div>
+    <h2>📖 Flashcard Sanctuary</h2>
+    <nav>
+        <p><strong>Dashboard</strong></p>
+        <ul>
+            <li>📊 Study Focus</li>
+            <li>⚡ DEEP WORK MODE</li>
+            <li>📚 My Library</li>
+            <li><a href="studio.html" class="sidebar-link">🎴 Flashcard Studio</a></li>
+            <li>📈 Analytics</li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Main Content -->
 <div class="studio-container">
     <div class="page-header">
         <a href="index.html" class="back-btn">← Back to Dashboard</a>

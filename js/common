@@ -8,6 +8,16 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Load all flashcard sets from localStorage
+function loadFlashcardSets() {
+    return JSON.parse(localStorage.getItem('flashcardSets')) || [];
+}
+
+// Save flashcard sets to localStorage
+function saveFlashcardSets(sets) {
+    localStorage.setItem('flashcardSets', JSON.stringify(sets));
+}
+
 // Show temporary toast notification
 function showToast(message, bgColor = '#4caf50') {
     // Remove existing toast if any
@@ -42,31 +52,6 @@ function showToast(message, bgColor = '#4caf50') {
     }, 1500);
 }
 
-// Load all flashcard sets from localStorage
-function loadFlashcardSets() {
-    return JSON.parse(localStorage.getItem('flashcardSets')) || [];
-}
-
-// Save flashcard sets to localStorage
-function saveFlashcardSets(sets) {
-    localStorage.setItem('flashcardSets', JSON.stringify(sets));
-}
-
-// Add toast animation style if not exists
-if (!document.querySelector('#toastStyle')) {
-    const style = document.createElement('style');
-    style.id = 'toastStyle';
-    style.textContent = `
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-        }
-    `;
-    document.head.appendChild(style);
-}
-
 // Hamburger menu functionality (used on all pages)
 function initHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
@@ -99,6 +84,21 @@ function initHamburgerMenu() {
             }
         }
     });
+}
+
+// Add toast animation style if not exists
+if (!document.querySelector('#toastStyle')) {
+    const style = document.createElement('style');
+    style.id = 'toastStyle';
+    style.textContent = `
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 console.log('✅ common.js loaded');
